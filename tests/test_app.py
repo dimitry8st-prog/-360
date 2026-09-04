@@ -5,6 +5,8 @@ os.environ["DATABASE_URL"] = "sqlite:///./test_dis360.db"
 os.environ["SECRET_KEY"] = "test-secret-key"
 os.environ["ADMIN_PASSWORD"] = "test-admin-password"
 
+Path("test_dis360.db").unlink(missing_ok=True)
+
 from fastapi.testclient import TestClient
 from app.main import app
 
@@ -80,6 +82,29 @@ def test_unicode_and_angle_brackets_are_readable():
         assert result.status_code == 200
         assert r"\u003c" not in result.text
         assert "&lt;адрес&gt;" in result.text
+
+
+def test_chat_file_context_stub_chart_and_export():
+    with TestClient(app) as client:
+        response = client.post("/register", data={"email": "chat@example.com", "password": "reliable-password"}, follow_redirects=False)
+        assert response.status_code == 303
+        created = client.post("/chat/new", follow_redirects=False)
+        assert created.status_code == 303
+        chat_url = created.headers["location"]
+        csv_path = Path("examples/sample_sales.csv")
+        with csv_path.open("rb") as handle:
+            uploaded = client.post(f"{chat_url}/upload", files={"data_file": (csv_path.name, handle, "text/csv")}, follow_redirects=False)
+        assert uploaded.status_code == 303
+        answer = client.post(f"{chat_url}/message", data={"question": "Кратко проанализируй файл"}, follow_redirects=True)
+        assert answer.status_code == 200
+        assert "Демо-режим" in answer.text
+        assert "6 строк" in answer.text
+        chart = client.post(f"{chat_url}/chart", data={"chart_type": "pie", "x_column": "region", "y_column": "revenue"}, follow_redirects=True)
+        assert chart.status_code == 200
+        assert "График pie" in chart.text
+        report = client.post(f"{chat_url}/export", follow_redirects=True)
+        assert report.status_code == 200
+        assert "Отчёт Markdown" in report.text
 
 
 def teardown_module():

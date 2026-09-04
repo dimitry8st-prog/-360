@@ -64,6 +64,23 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  scheduler:
+    build: .
+    command: ["celery", "-A", "app.tasks.celery_app", "beat", "--loglevel=INFO"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://dis360:${POSTGRES_PASSWORD:-change-me-db-password}@db:5432/dis360
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - uploads:/app/storage/uploads
+      - outputs:/app/storage/outputs
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
   nginx:
     image: nginx:1.27-alpine
     ports:
@@ -80,4 +97,3 @@ volumes:
   redis_data:
   uploads:
   outputs:
-

@@ -3,6 +3,7 @@ from __future__ import annotations
 import html
 import json
 import re
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 from uuid import uuid4
@@ -484,3 +485,15 @@ class ChartService:
             pass
         return {"html_url": f"/outputs/{html_name}", "png_url": png_url, "method": f"Тип: {chart_type}; X: {x}; Y: {y or 'частота'}."}
 
+
+class ExportService:
+    def __init__(self, cfg: Settings): self.cfg = cfg
+
+    def markdown(self, title: str, messages: list[Any]) -> dict[str, str]:
+        self.cfg.output_dir.mkdir(parents=True, exist_ok=True)
+        name = f"report_{uuid4().hex}.md"
+        body = [f"# {title}", "", f"Создано: {datetime.now(UTC).strftime('%Y-%m-%d %H:%M UTC')}", ""]
+        for message in messages:
+            body.extend([f"## {'Пользователь' if message.role == 'user' else 'ДИС'}", "", message.text, ""])
+        (self.cfg.output_dir / name).write_text("\n".join(body), encoding="utf-8")
+        return {"url": f"/outputs/{name}", "name": name}

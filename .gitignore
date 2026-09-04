@@ -9,3 +9,4 @@ storage/outputs/*
 !storage/outputs/.gitkeep
 *.db
 brand-assets/
+app/static/dis-mascot.png
