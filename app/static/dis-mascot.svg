@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">ДИС — цифровой лис</title>
+  <desc id="desc">Геометрический лис в сине-оранжевых цветах бренда ДИС</desc>
+  <rect width="320" height="320" rx="52" fill="#123b5d"/>
+  <path d="M57 76 126 111 94 176zM263 76 194 111l32 65z" fill="#f58220"/>
+  <path d="M84 108 160 69l76 39-13 105-63 50-63-50z" fill="#1976d2"/>
+  <path d="m109 129 51 19 51-19-17 76-34 32-34-32z" fill="#f4f7fa"/>
+  <path d="m142 192 18 9 18-9-18 24z" fill="#f58220"/>
+  <circle cx="128" cy="163" r="7" fill="#123b5d"/><circle cx="192" cy="163" r="7" fill="#123b5d"/>
+  <path d="M119 224q41 35 82 0" fill="none" stroke="#2e9d68" stroke-width="7" stroke-linecap="round"/>
+  <text x="160" y="298" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="28" fill="#f58220">ДИС</text>
+</svg>
