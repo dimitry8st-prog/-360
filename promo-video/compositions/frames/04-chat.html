@@ -1,0 +1,96 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: Inter, system-ui, sans-serif;
+      color: #25313c;
+    }
+    .ch-bg {
+      position: absolute;
+      inset: 0;
+      background: #123b5d;
+    }
+    .ch-plate {
+      position: absolute;
+      left: 70px;
+      top: 140px;
+      width: 1780px;
+      height: 720px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
+    }
+    .ch-plate img {
+      width: 1780px;
+      height: 860px;
+      object-fit: cover;
+      object-position: 50% 30%;
+    }
+    .ch-title {
+      position: absolute;
+      left: 80px;
+      top: 48px;
+      margin: 0;
+      color: #fff;
+      font-size: 48px;
+      font-weight: 800;
+    }
+    .ch-user,
+    .ch-bot {
+      position: absolute;
+      max-width: 980px;
+      padding: 22px 28px;
+      border-radius: 22px;
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    .ch-user {
+      right: 110px;
+      top: 180px;
+      background: #fff0e4;
+      color: #123b5d;
+    }
+    .ch-bot {
+      left: 110px;
+      top: 430px;
+      background: #edf5fb;
+      border-left: 8px solid #2e9d68;
+    }
+    .ch-who {
+      display: block;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #123b5d;
+      margin-bottom: 8px;
+    }
+  </style>
+  <div id="root" data-composition-id="04-chat" data-width="1920" data-height="1080">
+    <section id="chat-bg" class="clip" data-start="0" data-duration="10" data-track-index="0">
+      <div class="ch-bg"></div>
+    </section>
+    <section id="chat-ui" class="clip" data-start="0" data-duration="10" data-track-index="1">
+      <h1 class="ch-title" id="ch-title">Чат с ДИС</h1>
+      <div class="ch-plate"><img src="assets/ui-chat.png" alt="" /></div>
+      <div class="ch-user" id="ch-user">
+        <span class="ch-who">Вы</span>
+        Проанализируй продажи, найди основные тенденции и риски
+      </div>
+      <div class="ch-bot" id="ch-bot">
+        <span class="ch-who">ДИС</span>
+        Москва даёт основной объём выручки. Казань слабее — это зона риска по продажам.
+      </div>
+    </section>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#ch-title", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0);
+    tl.fromTo("#ch-user", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.55, ease: "power3.out" }, 0.45);
+    tl.fromTo("#ch-bot", { opacity: 0, x: -36 }, { opacity: 1, x: 0, duration: 0.55, ease: "power3.out" }, 3.5);
+    window.__timelines["04-chat"] = tl;
+  </script>
+</template>

@@ -1,0 +1,5 @@
+.media/
+node_modules/
+*.wav
+assets/bgm/air-bach.ogg
+assets/bgm/sviridov-time-ahead-ccby.mp3

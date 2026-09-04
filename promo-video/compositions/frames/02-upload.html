@@ -1,0 +1,110 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: Inter, system-ui, sans-serif;
+      color: #fff;
+    }
+    .up-bg {
+      position: absolute;
+      inset: 0;
+      background: #123b5d;
+    }
+    .up-super {
+      position: absolute;
+      left: 90px;
+      top: 36px;
+      margin: 0;
+      font-size: 32px;
+      font-weight: 800;
+      color: #f58220;
+    }
+    .up-title {
+      position: absolute;
+      left: 90px;
+      top: 86px;
+      margin: 0;
+      font-size: 48px;
+      font-weight: 800;
+    }
+    .up-file {
+      position: absolute;
+      left: 720px;
+      top: 92px;
+      background: #f58220;
+      color: #fff;
+      font-weight: 800;
+      font-size: 28px;
+      padding: 10px 22px;
+      border-radius: 999px;
+    }
+    .up-plate {
+      position: absolute;
+      left: 90px;
+      top: 170px;
+      width: 1740px;
+      height: 620px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
+    }
+    .up-plate img {
+      width: 1740px;
+      height: 860px;
+      object-fit: cover;
+      object-position: 50% 18%;
+      will-change: transform;
+    }
+    .up-pills {
+      position: absolute;
+      left: 90px;
+      top: 808px;
+      display: flex;
+      gap: 16px;
+    }
+    .up-pill {
+      background: rgba(255, 255, 255, 0.12);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: 26px;
+      font-weight: 800;
+    }
+  </style>
+  <div id="root" data-composition-id="02-upload" data-width="1920" data-height="1080">
+    <section id="upload-bg" class="clip" data-start="0" data-duration="8" data-track-index="0">
+      <div class="up-bg"></div>
+    </section>
+    <section id="upload-ui" class="clip" data-start="0" data-duration="8" data-track-index="1">
+      <p class="up-super" id="up-super">CSV • Excel • JSON • PDF • изображения</p>
+      <h1 class="up-title" id="up-title">Загрузка файла</h1>
+      <div class="up-file" id="up-file">sample_sales.csv</div>
+      <div class="up-plate">
+        <img id="up-shot" src="assets/ui-dashboard.png" alt="" />
+      </div>
+      <div class="up-pills">
+        <span class="up-pill" id="up-p1">CSV</span>
+        <span class="up-pill" id="up-p2">Excel</span>
+        <span class="up-pill" id="up-p3">JSON</span>
+        <span class="up-pill" id="up-p4">PDF</span>
+        <span class="up-pill" id="up-p5">изображения</span>
+      </div>
+    </section>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#up-title", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.1);
+    tl.fromTo("#up-file", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.35);
+    tl.fromTo("#up-shot", { scale: 1.08, y: 18 }, { scale: 1, y: 0, duration: 1.2, ease: "power2.out" }, 0.2);
+    tl.fromTo("#up-p1", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 2.0);
+    tl.fromTo("#up-p2", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 2.25);
+    tl.fromTo("#up-p3", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 2.5);
+    tl.fromTo("#up-p4", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 2.75);
+    tl.fromTo("#up-p5", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 3.0);
+    tl.fromTo("#up-super", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 5.05);
+    window.__timelines["02-upload"] = tl;
+  </script>
+</template>

@@ -1,0 +1,88 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: Inter, system-ui, sans-serif;
+      color: #fff;
+    }
+    .hook-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(1200px 700px at 28% 40%, #1b5a8a 0%, #123b5d 55%, #0c2740 100%);
+    }
+    .hook-glow {
+      position: absolute;
+      left: 220px;
+      top: 180px;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 130, 32, 0.38) 0%, rgba(245, 130, 32, 0) 70%);
+      will-change: transform, opacity;
+    }
+    .hook-mascot {
+      position: absolute;
+      left: 240px;
+      top: 200px;
+      width: 380px;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 48px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+      will-change: transform, opacity;
+    }
+    .hook-copy {
+      position: absolute;
+      left: 720px;
+      top: 250px;
+      width: 1080px;
+    }
+    .hook-eyebrow {
+      color: #f58220;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      font-size: 28px;
+      text-transform: uppercase;
+      margin: 0 0 18px;
+    }
+    .hook-title {
+      margin: 0;
+      font-size: 92px;
+      line-height: 0.95;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .hook-tag {
+      margin: 28px 0 0;
+      font-size: 48px;
+      font-weight: 700;
+      color: #f58220;
+    }
+  </style>
+  <div id="root" data-composition-id="01-hook" data-width="1920" data-height="1080">
+    <section id="hook-bg" class="clip" data-start="0" data-duration="6" data-track-index="0">
+      <div class="hook-bg"></div>
+    </section>
+    <section id="hook-hero" class="clip" data-start="0" data-duration="6" data-track-index="1">
+      <div class="hook-glow" id="hook-glow"></div>
+      <img class="hook-mascot" id="hook-mascot" src="assets/dis-mascot.jpg" alt="" />
+      <div class="hook-copy">
+        <p class="hook-eyebrow" id="hook-eyebrow">AI-помощник</p>
+        <h1 class="hook-title" id="hook-title">ДИС Аналитик 360</h1>
+        <p class="hook-tag" id="hook-tag">Данные становятся понятными</p>
+      </div>
+    </section>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#hook-glow", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.9, ease: "power2.out" }, 0);
+    tl.fromTo("#hook-mascot", { opacity: 0, y: 36, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.85, ease: "power3.out" }, 0.15);
+    tl.fromTo("#hook-eyebrow", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 1.2);
+    tl.fromTo("#hook-title", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 1.45);
+    tl.fromTo("#hook-tag", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 3.15);
+    window.__timelines["01-hook"] = tl;
+  </script>
+</template>

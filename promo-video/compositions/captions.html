@@ -1,0 +1,68 @@
+<template>
+  <style>
+    #captions-root {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    #cap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 900px;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .caption-group {
+      position: absolute;
+      max-width: 1600px;
+      padding: 16px 36px;
+      background: rgba(18, 59, 93, 0.88);
+      border: 2px solid #f58220;
+      border-radius: 16px;
+      font-family: Inter, system-ui, sans-serif;
+      font-weight: 800;
+      font-size: 36px;
+      line-height: 1.25;
+      text-align: center;
+      color: #fff;
+      opacity: 0;
+    }
+  </style>
+  <div
+    id="captions-root"
+    data-composition-id="captions"
+    data-width="1920"
+    data-height="1080"
+    data-duration="60"
+  >
+    <div id="cap" data-layout-allow-caption-zone="true"></div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const GROUPS = [
+      { start: 0.08, end: 5.7, text: "ДИС Аналитик 360 — персональный AI-помощник для анализа данных" },
+      { start: 6.08, end: 10.3, text: "Загрузите таблицу, документ или изображение" },
+      { start: 14.08, end: 20.8, text: "Система проверит качество данных, найдёт пропуски и дубликаты и рассчитает основные показатели" },
+      { start: 24.08, end: 28.9, text: "Задавайте вопросы обычными словами и получайте понятные выводы" },
+      { start: 34.08, end: 38.9, text: "ДИС строит интерактивные графики непосредственно по исходным данным" },
+      { start: 44.08, end: 49.3, text: "Ход обработки отображается в реальном времени, а результаты можно сохранить" },
+      { start: 52.08, end: 58.3, text: "ДИС Аналитик 360. Загрузил, спросил, понял" }
+    ];
+    const cap = document.getElementById("cap");
+    const tl = gsap.timeline({ paused: true });
+    GROUPS.forEach(function (g) {
+      const el = document.createElement("div");
+      el.className = "caption-group";
+      el.textContent = g.text;
+      cap.appendChild(el);
+      tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.18, overwrite: "auto" }, g.start);
+      tl.to(el, { opacity: 0, duration: 0.12, overwrite: "auto" }, g.end);
+      tl.set(el, { opacity: 0, visibility: "hidden" }, g.end + 0.12);
+    });
+    tl.to({}, { duration: 60 }, 0);
+    window.__timelines["captions"] = tl;
+  </script>
+</template>

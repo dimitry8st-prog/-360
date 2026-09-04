@@ -1,0 +1,109 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: Inter, system-ui, sans-serif;
+      color: #fff;
+    }
+    .q-bg {
+      position: absolute;
+      inset: 0;
+      background: #123b5d;
+    }
+    .q-plate {
+      position: absolute;
+      right: 70px;
+      top: 140px;
+      width: 820px;
+      height: 700px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
+    }
+    .q-plate img {
+      width: 820px;
+      height: 780px;
+      object-fit: cover;
+      object-position: 0 0;
+    }
+    .q-title {
+      position: absolute;
+      left: 80px;
+      top: 56px;
+      margin: 0;
+      font-size: 52px;
+      font-weight: 800;
+    }
+    .q-grid {
+      position: absolute;
+      left: 80px;
+      top: 160px;
+      width: 860px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+    .q-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 22px;
+      padding: 28px 30px;
+    }
+    .q-num {
+      display: block;
+      font-size: 72px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      color: #f58220;
+    }
+    .q-label {
+      display: block;
+      margin-top: 10px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .q-stats {
+      position: absolute;
+      left: 80px;
+      top: 620px;
+      font-size: 32px;
+      font-weight: 700;
+      color: #2e9d68;
+    }
+  </style>
+  <div id="root" data-composition-id="03-quality" data-width="1920" data-height="1080">
+    <section id="quality-bg" class="clip" data-start="0" data-duration="10" data-track-index="0">
+      <div class="q-bg"></div>
+    </section>
+    <section id="quality-ui" class="clip" data-start="0" data-duration="10" data-track-index="1">
+      <h1 class="q-title" id="q-title">Проверка качества</h1>
+      <div class="q-grid">
+        <div class="q-card" id="q-c1"><span class="q-num" id="q-n1">0</span><span class="q-label">строк</span></div>
+        <div class="q-card" id="q-c2"><span class="q-num" id="q-n2">0</span><span class="q-label">колонок</span></div>
+        <div class="q-card" id="q-c3"><span class="q-num" id="q-n3">0</span><span class="q-label">пропусков</span></div>
+        <div class="q-card" id="q-c4"><span class="q-num" id="q-n4">0</span><span class="q-label">дубликатов</span></div>
+      </div>
+      <p class="q-stats" id="q-stats">Выручка: сумма 531 000 · среднее 88 500</p>
+      <div class="q-plate"><img src="assets/ui-analysis.png" alt="" /></div>
+    </section>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    const s1 = { v: 0 }, s2 = { v: 0 }, s3 = { v: 0 }, s4 = { v: 0 };
+    tl.fromTo("#q-title", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0);
+    tl.fromTo("#q-c1", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.3);
+    tl.to(s1, { v: 6, duration: 0.8, ease: "power2.out", onUpdate: () => { document.getElementById("q-n1").textContent = String(Math.round(s1.v)); } }, 0.35);
+    tl.fromTo("#q-c2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.7);
+    tl.to(s2, { v: 5, duration: 0.8, ease: "power2.out", onUpdate: () => { document.getElementById("q-n2").textContent = String(Math.round(s2.v)); } }, 0.75);
+    tl.fromTo("#q-c3", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 2.2);
+    tl.to(s3, { v: 0, duration: 0.4, ease: "power2.out", onUpdate: () => { document.getElementById("q-n3").textContent = String(Math.round(s3.v)); } }, 2.25);
+    tl.fromTo("#q-c4", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 4.4);
+    tl.to(s4, { v: 0, duration: 0.4, ease: "power2.out", onUpdate: () => { document.getElementById("q-n4").textContent = String(Math.round(s4.v)); } }, 4.45);
+    tl.fromTo("#q-stats", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 6.6);
+    window.__timelines["03-quality"] = tl;
+  </script>
+</template>

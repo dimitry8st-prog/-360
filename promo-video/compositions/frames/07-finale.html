@@ -1,0 +1,115 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: Inter, system-ui, sans-serif;
+      color: #fff;
+    }
+    .fn-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(1000px 640px at 50% 40%, #1b5a8a 0%, #123b5d 60%, #0c2740 100%);
+    }
+    .fn-row {
+      position: absolute;
+      left: 160px;
+      top: 130px;
+      width: 1600px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .fn-icon {
+      width: 280px;
+      text-align: center;
+    }
+    .fn-mark {
+      width: 92px;
+      height: 92px;
+      margin: 0 auto 16px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 28px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .fn-icon p {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 800;
+    }
+    .fn-title {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 390px;
+      text-align: center;
+      margin: 0;
+      font-size: 72px;
+      font-weight: 800;
+    }
+    .fn-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 490px;
+      text-align: center;
+      margin: 0;
+      font-size: 48px;
+      font-weight: 800;
+      color: #f58220;
+    }
+    .fn-author {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 580px;
+      text-align: center;
+      margin: 0;
+      font-size: 36px;
+      font-weight: 700;
+    }
+    .fn-mascot {
+      position: absolute;
+      left: 860px;
+      top: 640px;
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 36px;
+    }
+  </style>
+  <div id="root" data-composition-id="07-finale" data-width="1920" data-height="1080">
+    <section id="finale-bg" class="clip" data-start="0" data-duration="8" data-track-index="0">
+      <div class="fn-bg"></div>
+    </section>
+    <section id="finale-ui" class="clip" data-start="0" data-duration="8" data-track-index="1">
+      <div class="fn-row">
+        <div class="fn-icon" id="fn-i1"><div class="fn-mark">D</div><p>Docker</p></div>
+        <div class="fn-icon" id="fn-i2"><div class="fn-mark">API</div><p>FastAPI</p></div>
+        <div class="fn-icon" id="fn-i3"><div class="fn-mark">PG</div><p>PostgreSQL</p></div>
+        <div class="fn-icon" id="fn-i4"><div class="fn-mark">R</div><p>Redis</p></div>
+        <div class="fn-icon" id="fn-i5"><div class="fn-mark">L</div><p>Логирование</p></div>
+      </div>
+      <h1 class="fn-title" id="fn-title">ДИС Аналитик 360</h1>
+      <p class="fn-line" id="fn-line">Загрузил. Спросил. Понял.</p>
+      <p class="fn-author" id="fn-author">Автор — Степанов Д. А.</p>
+      <img class="fn-mascot" id="fn-mascot" src="assets/dis-mascot.jpg" alt="" />
+    </section>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    ["#fn-i1", "#fn-i2", "#fn-i3", "#fn-i4", "#fn-i5"].forEach((id, i) => {
+      tl.fromTo(id, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.15 + i * 0.12);
+    });
+    tl.fromTo("#fn-title", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 3.2);
+    tl.fromTo("#fn-line", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 6.0);
+    tl.fromTo("#fn-author", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 6.7);
+    tl.fromTo("#fn-mascot", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 3.4);
+    window.__timelines["07-finale"] = tl;
+  </script>
+</template>

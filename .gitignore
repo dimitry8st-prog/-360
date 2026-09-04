@@ -10,3 +10,6 @@ storage/outputs/*
 *.db
 brand-assets/
 app/static/dis-mascot.png
+.chrome-shot/
+screenshots/*.png
+screenshots/*.jpg

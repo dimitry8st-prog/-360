@@ -1,0 +1,95 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: Inter, system-ui, sans-serif;
+      color: #fff;
+    }
+    .rt-bg {
+      position: absolute;
+      inset: 0;
+      background: #123b5d;
+    }
+    .rt-title {
+      position: absolute;
+      left: 90px;
+      top: 56px;
+      margin: 0;
+      font-size: 52px;
+      font-weight: 800;
+    }
+    .rt-col {
+      position: absolute;
+      left: 90px;
+      top: 170px;
+      width: 920px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .rt-chip {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 26px 32px;
+      font-size: 40px;
+      font-weight: 800;
+    }
+    .rt-chip.on {
+      background: #2e9d68;
+    }
+    .rt-save {
+      position: absolute;
+      right: 90px;
+      top: 220px;
+      width: 760px;
+      background: #fff;
+      color: #123b5d;
+      border-radius: 28px;
+      padding: 48px 44px;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
+    }
+    .rt-save h2 {
+      margin: 0 0 18px;
+      font-size: 40px;
+    }
+    .rt-btn {
+      background: #f58220;
+      color: #fff;
+      display: inline-block;
+      padding: 16px 28px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 28px;
+    }
+  </style>
+  <div id="root" data-composition-id="06-realtime" data-width="1920" data-height="1080">
+    <section id="realtime-bg" class="clip" data-start="0" data-duration="8" data-track-index="0">
+      <div class="rt-bg"></div>
+    </section>
+    <section id="realtime-ui" class="clip" data-start="0" data-duration="8" data-track-index="1">
+      <h1 class="rt-title" id="rt-title">Статус в реальном времени</h1>
+      <div class="rt-col">
+        <div class="rt-chip" id="rt-a">Файл загружается</div>
+        <div class="rt-chip" id="rt-b">Выполняется анализ</div>
+        <div class="rt-chip" id="rt-c">График готов</div>
+      </div>
+      <div class="rt-save" id="rt-save">
+        <h2>Сохранить отчёт</h2>
+        <span class="rt-btn">Сохранить отчёт .md</span>
+      </div>
+    </section>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#rt-title", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0);
+    tl.fromTo("#rt-a", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 0.2);
+    tl.fromTo("#rt-b", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 1.8);
+    tl.fromTo("#rt-c", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 3.6);
+    tl.to("#rt-c", { backgroundColor: "#2e9d68", duration: 0.3, ease: "power2.out" }, 3.9);
+    tl.fromTo("#rt-save", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 5.4);
+    window.__timelines["06-realtime"] = tl;
+  </script>
+</template>
