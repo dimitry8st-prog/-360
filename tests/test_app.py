@@ -16,7 +16,8 @@ def test_health_and_registration():
         assert health.json()["database"] == "ok"
         email = "student@example.com"
         response = client.post("/register", data={"email": email, "password": "reliable-password"}, follow_redirects=False)
-        assert response.status_code in {303, 409}
+        assert response.status_code == 303
+        assert response.headers["location"] == "/dashboard"
 
 
 def test_unauthorized_dashboard_redirects():
@@ -49,11 +50,40 @@ def test_authenticated_csv_chart_and_websocket():
         assert result.status_code == 200
         assert "6 строк" in result.text
         assert "Интерактивный график" in result.text
+        assert "Как рассчитано" in result.text
+        assert "\\u0441" not in result.text
+        assert "\\u003c" not in result.text
+        assert "бизнес-аналитик" in result.text
         with client.websocket_connect("/ws/status") as websocket:
             assert websocket.receive_json()["stage"] == "connected"
             websocket.send_text("test")
             assert websocket.receive_json()["stage"] == "ready"
 
 
+def test_unicode_and_angle_brackets_are_readable():
+    from app.services import normalize_text, pretty_json
+
+    assert normalize_text(r"\u003cадрес\u003e") == "<адрес>"
+    assert normalize_text("&lt;адрес&gt;") == "<адрес>"
+    dumped = pretty_json({"answer": "<адрес> по <адрес>"})
+    assert "<адрес>" in dumped
+    assert r"\u003c" not in dumped
+    assert r"\u0441" not in dumped
+
+    with TestClient(app) as client:
+        client.post("/register", data={"email": "unicode@example.com", "password": "reliable-password"}, follow_redirects=False)
+        result = client.post(
+            "/analyze",
+            data={"chart_type": "bar"},
+            files={"data_file": ("notes.csv", "city,note\nМосква,<адрес>\n".encode("utf-8"), "text/csv")},
+        )
+        assert result.status_code == 200
+        assert r"\u003c" not in result.text
+        assert "&lt;адрес&gt;" in result.text
+
+
 def teardown_module():
-    Path("test_dis360.db").unlink(missing_ok=True)
+    try:
+        Path("test_dis360.db").unlink(missing_ok=True)
+    except PermissionError:
+        pass

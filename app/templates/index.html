@@ -1,1 +1,46 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>{{ app_name }}</title><link rel="stylesheet" href="/static/style.css"></head><body><main class="landing"><section class="hero"><div><span class="badge">AI DATA WORKSPACE</span><h1>ДИС Аналитик 360</h1><p class="lead">Загружайте данные. Задавайте вопросы. Получайте проверяемые решения.</p><p>Бизнес, финансы, маркетинг и контроль качества данных — в одном защищённом пространстве.</p></div><div class="mascot"><img src="/static/dis-mascot.svg" alt="Маскот ДИС — цифровой лис"><span>ДИС</span></div></section><section class="auth-grid"><form method="post" action="/login" class="card"><h2>Вход</h2><input name="email" type="email" placeholder="Email" required><input name="password" type="password" placeholder="Пароль" required><button>Войти</button><small>2FA — скоро будет доступно</small></form><form method="post" action="/register" class="card"><h2>Регистрация</h2><input name="email" type="email" placeholder="Email" required><input name="password" type="password" minlength="10" placeholder="Пароль от 10 символов" required><button>Создать аккаунт</button><small>Подтверждение email через SMTP — заглушка для демо</small></form></section></main></body></html>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>{{ app_name }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main class="landing">
+  <section class="hero">
+    <div>
+      <span class="badge">AI DATA WORKSPACE</span>
+      <h1>ДИС Аналитик 360</h1>
+      <p class="lead">Загружайте данные. Задавайте вопросы. Получайте проверяемые решения.</p>
+      <p>Бизнес, финансы, маркетинг и контроль качества данных — в одном защищённом пространстве.</p>
+    </div>
+    <div class="mascot">
+      <img src="/static/dis-mascot.jpg" alt="Маскот ДИС — лис">
+      <span>ДИС</span>
+    </div>
+  </section>
+  {% if error %}<p class="auth-error">{{ error }}</p>{% endif %}
+  <section class="auth-grid">
+    <form method="post" action="/login" class="card{% if form == 'login' and error %} card-attention{% endif %}">
+      <h2>Вход</h2>
+      <label for="login-email">Email</label>
+      <input id="login-email" name="email" type="email" placeholder="Email" value="{{ email }}" required>
+      <label for="login-password">Пароль</label>
+      <input id="login-password" name="password" type="password" placeholder="Пароль" required>
+      <button>Войти</button>
+      <small>Демо-админ: {{ demo_email }} / {{ demo_password }}</small>
+    </form>
+    <form method="post" action="/register" class="card{% if form == 'register' and error %} card-attention{% endif %}">
+      <h2>Регистрация</h2>
+      <label for="register-email">Email</label>
+      <input id="register-email" name="email" type="email" placeholder="Email" value="{{ email if form == 'register' else '' }}" required>
+      <label for="register-password">Пароль</label>
+      <input id="register-password" name="password" type="password" minlength="10" placeholder="Пароль от 10 символов" required>
+      <button>Создать аккаунт</button>
+      <small>Если email уже есть — войдите слева. Пароль не короче 10 символов.</small>
+    </form>
+  </section>
+</main>
+</body>
+</html>

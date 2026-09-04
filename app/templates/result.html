@@ -1,2 +1,107 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Результат — ДИС</title><link rel="stylesheet" href="/static/style.css"></head><body><header><a href="/dashboard" class="logo">← ДИС Аналитик 360</a><span>{{ user.email }}</span></header><main><section class="card"><span class="badge">КРАТКИЙ ВЫВОД</span><h1>{{ record.original_name }}</h1><p class="lead">{{ result.summary }}</p>{% if result.kind == 'table' %}<div class="metrics"><b>{{ result.rows }} строк</b><b>{{ result.columns }} колонок</b><b>{{ result.missing }} пропусков</b><b>{{ result.duplicates }} дубликатов</b></div>{% endif %}</section>{% if chart %}<section class="card"><h2>Интерактивный график</h2><iframe src="{{ chart.html_url }}"></iframe>{% if chart.png_url %}<a class="button" href="{{ chart.png_url }}" download>Скачать PNG</a>{% else %}<p class="warning">PNG не создан: интерактивная версия доступна, экспорт проверяется отдельно.</p>{% endif %}<details><summary>Как рассчитано</summary><p>{{ chart.method }}</p><p>Контрольный запрос: {{ request_id }}</p></details></section>{% endif %}<section class="card"><h2>Подробности</h2><pre>{{ result | tojson(indent=2) }}</pre><p class="warning">ДИС показывает наблюдения, но не выдаёт корреляцию за причинно-следственную связь.</p></section></main></body></html>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Результат — ДИС</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <a href="/dashboard" class="logo">← ДИС Аналитик 360</a>
+  <span>{{ user.email }}</span>
+</header>
+<main>
+  <section class="card">
+    <span class="badge">КРАТКИЙ ВЫВОД</span>
+    <h1>{{ record.original_name }}</h1>
+    <p class="mode-line">Режим: {{ result.mode }}</p>
+    <p class="lead">{{ result.summary }}</p>
+    {% if result.question %}<p><b>Вопрос:</b> {{ result.question }}</p>{% endif %}
+    {% if result.answer %}<p>{{ result.answer }}</p>{% endif %}
+    {% if result.kind == 'table' %}
+    <div class="metrics">
+      <b>{{ result.rows }} строк</b>
+      <b>{{ result.columns }} колонок</b>
+      <b>{{ result.missing }} пропусков</b>
+      <b>{{ result.duplicates }} дубликатов</b>
+    </div>
+    {% elif result.kind == 'pdf' %}
+    <div class="metrics">
+      <b>{{ result.pages }} стр.</b>
+      <b>{{ result.words }} слов</b>
+      <b>{{ result.characters }} символов</b>
+      <b>{{ result.empty_pages }} пустых стр.</b>
+    </div>
+    {% elif result.kind == 'image' %}
+    <div class="metrics">
+      <b>{{ result.width }}×{{ result.height }}</b>
+      <b>{{ result.format }}</b>
+      <b>{{ result.image_mode }}</b>
+    </div>
+    {% endif %}
+  </section>
 
+  {% if result.findings %}
+  <section class="card">
+    <h2>На что обратить внимание</h2>
+    <ul class="findings">
+      {% for item in result.findings %}<li>{{ item }}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+    {% if result.excerpt %}
+    <section class="card">
+      <h2>Фрагмент документа</h2>
+      <p class="excerpt">{{ result.excerpt }}</p>
+      {% if result.highlights %}
+      <h3>Контекст цифр</h3>
+      <ul class="findings">
+        {% for item in result.highlights %}<li>{{ item }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+      {% if result.numbers %}<p><b>Ключевые числа:</b> {{ result.numbers | join(", ") }}</p>{% endif %}
+    </section>
+    {% endif %}
+
+  {% if result.numeric_stats %}
+  <section class="card">
+    <h2>Основные показатели</h2>
+    <table>
+      <tr><th>Колонка</th><th>Сумма</th><th>Среднее</th><th>Min</th><th>Max</th></tr>
+      {% for col, stats in result.numeric_stats.items() %}
+      <tr><td>{{ col }}</td><td>{{ stats.sum }}</td><td>{{ stats.mean }}</td><td>{{ stats.min }}</td><td>{{ stats.max }}</td></tr>
+      {% endfor %}
+    </table>
+  </section>
+  {% endif %}
+
+  {% if chart %}
+  <section class="card">
+    <h2>Интерактивный график</h2>
+    <iframe src="{{ chart.html_url }}"></iframe>
+    {% if chart.png_url %}
+    <a class="button" href="{{ chart.png_url }}" download>Скачать PNG</a>
+    {% else %}
+    <p class="warning">PNG не создан: интерактивная версия доступна, экспорт проверяется отдельно.</p>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <section class="card">
+    <details open>
+      <summary>Как рассчитано</summary>
+      <p>{{ result.method }}</p>
+      {% if chart %}<p>{{ chart.method }}</p>{% endif %}
+      <p>Контрольный запрос: {{ request_id }}</p>
+    </details>
+    <details>
+      <summary>Подробности</summary>
+      <pre>{{ result | pretty_json }}</pre>
+    </details>
+    <p class="warning">ДИС показывает наблюдения, но не выдаёт корреляцию за причинно-следственную связь.</p>
+  </section>
+</main>
+</body>
+</html>
